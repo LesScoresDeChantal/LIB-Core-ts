@@ -1,9 +1,10 @@
 import getEnv from '../env';
+import version from './version';
 import type { MongoClientOptions } from 'mongodb';
 
 export default {
   core: {
-    version: '0.0.1-beta',
+    version,
     lang: 'ts',
   },
 
