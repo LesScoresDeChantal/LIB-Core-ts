@@ -1,11 +1,12 @@
 {
   "name": "lib-core-ts",
-  "version": "0.0.1-beta",
-  "main": "index.ts",
+  "version": "0.0.2-beta",
+  "main": "dist/index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist/ && tsc"
+    "build": "rm -rf dist/ && tsc",
+    "dev": "tsc -w"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
