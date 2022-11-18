@@ -1,6 +1,13 @@
 import getEnv from '../env';
-import version from './version';
+import getVersion from '../version';
 import type { MongoClientOptions } from 'mongodb';
+
+const version = getVersion([
+  `${__dirname.replace(/\/src$/, '')}`,
+  `${__dirname.replace(/\/dist\/src$/, '')}`,
+]);
+
+if (version) console.log(`[Core v${version}] Loading...`);
 
 export default {
   core: {
