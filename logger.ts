@@ -3,10 +3,12 @@ import type { ObjectId } from 'mongodb';
 import config from './src/config';
 import { db, mongoClient } from './mongo';
 
+const LOGGER_DISABLED = config.NOLOG;
+
 export let session: ObjectId;
 
 export async function initLogger(data: { [key: string]: any }) {
-  if (config.NOLOG) return null;
+  if (LOGGER_DISABLED) return null;
 
   const runsColl = db.collection('_RUNS');
   const sessionDoc = await runsColl.insertOne({
@@ -41,7 +43,11 @@ export async function initLogger(data: { [key: string]: any }) {
 type LogType = 'ERROR' | 'WARN' | 'INFO';
 
 export async function log(type: LogType, ...messages: any[]) {
-  if (!session) return;
+  if (LOGGER_DISABLED) return;
+  if (!session) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!session) return;
+  }
 
   const logsColl = db.collection('_LOGS');
   const logDoc = await logsColl.insertOne({
@@ -65,7 +71,12 @@ export async function log(type: LogType, ...messages: any[]) {
 type SessionStatus = 'SUCCESS' | 'FAILED';
 
 export async function exit(status: SessionStatus, fullStatus?: { [k: string]: any }) {
-  if (!session) return;
+  const exitCode = status === 'SUCCESS' ? 0 : 1;
+  if (LOGGER_DISABLED) process.exit(exitCode);
+  if (!session) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!session) process.exit(exitCode);
+  }
 
   const runsColl = db.collection('_RUNS');
   await runsColl.updateOne(
@@ -78,8 +89,6 @@ export async function exit(status: SessionStatus, fullStatus?: { [k: string]: an
       },
     },
   );
-
-  const exitCode = status === 'SUCCESS' ? 0 : 1;
 
   // On force la fermeture du processus au bout de 2 secondes au cas où
   setTimeout(() => process.exit(exitCode), 2000);
