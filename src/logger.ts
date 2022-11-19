@@ -96,7 +96,7 @@ export namespace logger {
     setTimeout(() => process.exit(exitCode), 2000);
 
     // On ferme la connexion à la base de données
-    await mongo.mongoClient.close();
+    await mongo.client.close();
     process.exit(exitCode);
   }
 };

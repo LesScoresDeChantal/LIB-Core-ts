@@ -91,7 +91,7 @@ var logger;
             // On force la fermeture du processus au bout de 2 secondes au cas où
             setTimeout(() => process.exit(exitCode), 2000);
             // On ferme la connexion à la base de données
-            yield mongo_1.default.mongoClient.close();
+            yield mongo_1.default.client.close();
             process.exit(exitCode);
         });
     }
