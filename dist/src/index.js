@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.core = void 0;
-const logger_1 = __importDefault(require("./src/logger"));
+const logger_1 = __importDefault(require("./logger"));
 ;
 var core;
 (function (core) {
@@ -38,8 +38,8 @@ var core;
     });
 })(core = exports.core || (exports.core = {}));
 ;
-__exportStar(require("./src/env"), exports);
-__exportStar(require("./src/mongo"), exports);
-__exportStar(require("./src/logger"), exports);
-__exportStar(require("./src/request"), exports);
-__exportStar(require("./src/module"), exports);
+__exportStar(require("./env"), exports);
+__exportStar(require("./mongo"), exports);
+__exportStar(require("./logger"), exports);
+__exportStar(require("./request"), exports);
+__exportStar(require("./module"), exports);

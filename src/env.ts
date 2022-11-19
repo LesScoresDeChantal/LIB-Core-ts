@@ -25,18 +25,22 @@ for (const envFile of envFiles) {
   console.log(`Loaded env file: '${envFile}'`);
 }
 
-/**
- * Get an environment variable.
- * @param key The environment variable key.
- * @param defVal The default value.
- */
-export default (key: string, defVal?: string): string => {
-  const value = process.env[key] ?? defVal;
+export namespace env {
+  /**
+   * Get an environment variable.
+   * @param key The environment variable key.
+   * @param defVal The default value.
+   */
+  export const get = (key: string, defVal?: string): string => {
+    const value = process.env[key] ?? defVal;
 
-  if (value === undefined) {
-    console.error(`Missing environment variable '${key}'`);
-    process.exit(1);
-  }
+    if (value === undefined) {
+      console.error(`Missing environment variable '${key}'`);
+      process.exit(1);
+    }
 
-  return value;
+    return value;
+  };
 };
+
+export default env;

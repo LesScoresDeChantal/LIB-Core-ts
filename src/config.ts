@@ -1,24 +1,25 @@
-import getEnv from '../env';
-import getVersion from '../version';
+import env from './env';
+import module from './module';
 import type { MongoClientOptions } from 'mongodb';
 
-const version = getVersion([
+const pkg = module.get([
   `${__dirname.replace(/\/src$/, '')}`,
   `${__dirname.replace(/\/dist\/src$/, '')}`,
 ]);
 
-if (version) console.log(`[Core v${version}] Loading...`);
+const mod = module.parse(pkg);
+if (pkg.version) console.log(`[${mod.name} v${pkg.version}] Loading...`);
 
 export default {
   core: {
-    version,
-    lang: 'ts',
+    version: mod.version,
+    lang: mod.lang,
   },
 
-  mongoUrl: getEnv('MONGO_URL'),
-  database: getEnv('MONGO_DB', 'collectests'),
+  mongoUrl: env.get('MONGO_URL'),
+  database: env.get('MONGO_DB', 'collectests'),
 
-  NOLOG: getEnv('NOLOG', ''),
+  NOLOG: env.get('NOLOG', ''),
 } as {
   core: {
     version: string;

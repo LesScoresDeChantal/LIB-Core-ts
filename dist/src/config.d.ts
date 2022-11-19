@@ -1,5 +1,4 @@
 import type { MongoClientOptions } from 'mongodb';
-declare const version: string;
 declare const _default: {
     core: {
         version: string;
