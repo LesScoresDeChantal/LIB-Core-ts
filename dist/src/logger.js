@@ -30,6 +30,9 @@ var logger;
                     filename: __filename,
                     processTitle: process.title,
                     nodeVersion: process.version,
+                    mainPat: require.main.path,
+                    procPWD: process.env['PWD'],
+                    initCWD: process.env['INIT_CWD'],
                 }, machine: {
                     hostname: os_1.default.hostname(),
                     platform: process.platform,
